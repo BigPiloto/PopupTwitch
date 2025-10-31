@@ -39,8 +39,7 @@ Principais recursos:
 Baixe a versão mais recente na página de [**Releases**](https://github.com/BigPiloto/PopupTwitch/releases).  
 > Arquivo: `Pop-upTwitch-v2-Installer.exe`
 
-Após o download, execute o instalador e siga as instruções na tela.  
-Requer **.NET Desktop Runtime 8.0** (instalado automaticamente, se necessário).
+Após o download, execute o instalador e siga as instruções na tela.
 
 ---
 
