@@ -1,7 +1,11 @@
-bin/
-obj/
+# build artifacts
+/bin/
+/obj/
+/publish/
+/*.exe
+/*.msi
+
+# IDE files
 .vs/
 *.user
-*.exe
-*.msi
-*.pdb
+*.suo

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value></resheader>
+
+  <!-- AppConfig -->
+  <data name="Default_PopupMessage" xml:space="preserve"><value>Chat is active again!</value></data>
+  <data name="Error_PopupTooShort" xml:space="preserve"><value>Minimum popup time is 500 ms.</value></data>
+  <data name="Error_IdleTooShort" xml:space="preserve"><value>Minimum idle time is 1 second.</value></data>
+
+  <!-- ChatIdleForm -->
+  <data name="Title_ChatIdle" xml:space="preserve"><value>Chat idle time</value></data>
+  <data name="Lbl_ChatIdle" xml:space="preserve"><value>Idle time (seconds):</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Msg_Saved" xml:space="preserve"><value>Time saved successfully!</value></data>
+  <data name="Msg_InvalidInt" xml:space="preserve"><value>Enter a valid integer number.</value></data>
+  <data name="Title_Config" xml:space="preserve"><value>Configuration</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Error</value></data>
+  <data name="Title_InvalidValue" xml:space="preserve"><value>Invalid value</value></data>
+
+  <!-- IgnoredUsersForm -->
+  <data name="Title_IgnoredUsers" xml:space="preserve"><value>Ignored users</value></data>
+  <data name="Lbl_IgnoredUsers" xml:space="preserve"><value>Ignored users:</value></data>
+  <data name="Btn_ClearAll" xml:space="preserve"><value>Clear all</value></data>
+  <data name="Msg_RemoveConfirm" xml:space="preserve"><value>Remove "{0}" from ignored list?</value></data>
+  <data name="Title_RemoveConfirm" xml:space="preserve"><value>Confirm removal</value></data>
+  <data name="Msg_NoUserSelected" xml:space="preserve"><value>No user selected.</value></data>
+  <data name="Title_Warning" xml:space="preserve"><value>Warning</value></data>
+  <data name="Msg_ListEmpty" xml:space="preserve"><value>The list is already empty.</value></data>
+  <data name="Title_Info" xml:space="preserve"><value>Information</value></data>
+  <data name="Msg_ClearAllConfirm" xml:space="preserve"><value>Are you sure you want to clear all users?</value></data>
+  <data name="Title_Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Msg_ListCleared" xml:space="preserve"><value>Ignored users list cleared.</value></data>
+  <data name="Title_Success" xml:space="preserve"><value>Success</value></data>
+  <data name="Msg_ListSaved" xml:space="preserve"><value>Ignored users list saved successfully.</value></data>
+
+  <!-- MainForm -->
+  <data name="Title_Main" xml:space="preserve"><value>Pop-up Twitch</value></data>
+  <data name="Lbl_Channel" xml:space="preserve"><value>Twitch channel:</value></data>
+  <data name="Btn_Connect" xml:space="preserve"><value>Connect</value></data>
+  <data name="Btn_Disconnect" xml:space="preserve"><value>Disconnect</value></data>
+  <data name="Btn_Connecting" xml:space="preserve"><value>Connecting...</value></data>
+  <data name="Btn_Disconnecting" xml:space="preserve"><value>Disconnecting...</value></data>
+
+  <!-- PopupDurationForm -->
+  <data name="Title_PopupDuration" xml:space="preserve"><value>Popup Duration</value></data>
+  <data name="Lbl_PopupDuration" xml:space="preserve"><value>Popup duration (ms):</value></data>
+  <data name="Msg_SavedDuration" xml:space="preserve"><value>Time saved successfully!</value></data>
+  <data name="Msg_InvalidValue" xml:space="preserve"><value>Invalid value. Enter an integer number.</value></data>
+
+  <!-- PopupPositionForm -->
+  <data name="Title_PopupPosition" xml:space="preserve"><value>Popup Position</value></data>
+  <data name="Lbl_InfoPosition" xml:space="preserve"><value>Drag or resize the blue popup and click Save (Esc to exit, Enter to confirm).</value></data>
+  <data name="Btn_ResetDefault" xml:space="preserve"><value>Restore default</value></data>
+  <data name="Msg_ResetSuccess" xml:space="preserve"><value>Position and size restored to default.</value></data>
+  <data name="Title_ResetDefault" xml:space="preserve"><value>Restore default</value></data>
+  <data name="Msg_SavedPosition" xml:space="preserve"><value>Position saved successfully!</value></data>
+
+  <!-- PopupStyleForm -->
+  <data name="Title_PopupStyle" xml:space="preserve"><value>Customize Popup</value></data>
+  <data name="Lbl_BackgroundColor" xml:space="preserve"><value>Background color:</value></data>
+  <data name="Lbl_TextColor" xml:space="preserve"><value>Text color:</value></data>
+  <data name="Lbl_CornerRadius" xml:space="preserve"><value>Corner radius:</value></data>
+  <data name="Lbl_Opacity" xml:space="preserve"><value>Opacity:</value></data>
+  <data name="Lbl_PopupText" xml:space="preserve"><value>Popup text:</value></data>
+  <data name="Btn_Change" xml:space="preserve"><value>Change</value></data>
+  <data name="Msg_StyleSaved" xml:space="preserve"><value>Style saved successfully!</value></data>
+  <data name="Msg_StyleReset" xml:space="preserve"><value>Style restored to default.</value></data>
+
+  <!-- SonsForm -->
+  <data name="Title_SoundSettings" xml:space="preserve"><value>Sound Settings</value></data>
+  <data name="Chk_EnableSound" xml:space="preserve"><value>Enable notification sound</value></data>
+  <data name="Btn_SelectSound" xml:space="preserve"><value>Select sound...</value></data>
+  <data name="Btn_RestoreSound" xml:space="preserve"><value>Restore original</value></data>
+  <data name="Msg_SoundUploaded" xml:space="preserve"><value>Custom sound created successfully.</value></data>
+  <data name="Msg_SoundCopyError" xml:space="preserve"><value>Error copying file: {0}</value></data>
+  <data name="Msg_SoundRestored" xml:space="preserve"><value>Original sound restored.</value></data>
+  <data name="Msg_SoundSaved" xml:space="preserve"><value>Sound settings saved.</value></data>
+
+  <!-- SettingsMenuForm -->
+  <data name="Title_Settings" xml:space="preserve"><value>Settings</value></data>
+  <data name="Lbl_SelectOption" xml:space="preserve"><value>Select an option:</value></data>
+  <data name="Btn_IgnoredUsers" xml:space="preserve"><value>Ignored users</value></data>
+  <data name="Btn_PopupPosition" xml:space="preserve"><value>Popup position and size</value></data>
+  <data name="Btn_PopupDuration" xml:space="preserve"><value>Popup duration</value></data>
+  <data name="Btn_ChatIdle" xml:space="preserve"><value>Chat idle time</value></data>
+  <data name="Btn_PopupStyle" xml:space="preserve"><value>Customize popup</value></data>
+  <data name="Btn_SoundSettings" xml:space="preserve"><value>Sound configuration</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>Close</value></data>
+
+  <!-- Language -->
+  <data name="Btn_Language" xml:space="preserve"><value>Language</value></data>
+  <data name="Title_Language" xml:space="preserve"><value>Select language</value></data>
+  <data name="Msg_LanguageChanged" xml:space="preserve"><value>Language changed. Restart the application to apply changes.</value></data>
+  <data name="Opt_Portuguese" xml:space="preserve"><value>Portuguese (Brazil)</value></data>
+  <data name="Opt_English" xml:space="preserve"><value>English</value></data>
+  <data name="Lbl_SelectLanguage" xml:space="preserve"><value>Select the language:</value></data>
+</root>

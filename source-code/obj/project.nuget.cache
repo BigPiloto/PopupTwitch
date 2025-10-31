@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "dgSpecHash": "N6zY0YAshtQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mathe\\OneDrive\\Desktop\\Pop-up Twitch\\PopupTwitch\\source-code\\PopupTwitch.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mathe\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\naudio\\2.2.1\\naudio.2.2.1.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\naudio.asio\\2.2.1\\naudio.asio.2.2.1.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\naudio.core\\2.2.1\\naudio.core.2.2.1.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\naudio.midi\\2.2.1\\naudio.midi.2.2.1.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\naudio.wasapi\\2.2.1\\naudio.wasapi.2.2.1.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\naudio.winforms\\2.2.1\\naudio.winforms.2.2.1.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\naudio.winmm\\2.2.1\\naudio.winmm.2.2.1.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\twitchlib.client\\3.4.0\\twitchlib.client.3.4.0.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\twitchlib.client.enums\\3.4.0\\twitchlib.client.enums.3.4.0.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\twitchlib.client.models\\3.4.0\\twitchlib.client.models.3.4.0.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\twitchlib.communication\\1.0.6\\twitchlib.communication.1.0.6.nupkg.sha512"
+  ],
+  "logs": []
+}
