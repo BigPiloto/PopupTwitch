@@ -1,11 +1,13 @@
-# build artifacts
-/bin/
-/obj/
-/publish/
-/*.exe
-/*.msi
+# Build artifacts
+bin/
+obj/
+publish/
 
-# IDE files
+# Visual Studio / VS Code
 .vs/
 *.user
 *.suo
+
+# Instaladores
+*.exe
+*.msi
