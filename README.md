@@ -6,7 +6,7 @@
 ![Last commit](https://img.shields.io/github/last-commit/BigPiloto/PopupTwitch.svg)
 ![License](https://img.shields.io/github/license/BigPiloto/PopupTwitch.svg)
 
-# 🎬 Pop-up Twitch
+# 🎬 Pop-up Twitch Messages
 
 Windows desktop application built in **C# (.NET 8)** that displays **real-time pop-up alerts for Twitch chat activity**.  
 It monitors the Twitch channel defined in the settings and shows configurable on-screen notifications whenever viewers send messages — so you’ll never miss a chat message again.  
