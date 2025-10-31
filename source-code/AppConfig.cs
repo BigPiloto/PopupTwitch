@@ -122,7 +122,7 @@ namespace PopupTwitch
 
         public static int GetChatIdle()
         {
-            return Data.ChatIdleMs > 0 ? Data.ChatIdleMs / 1000 : 5;
+            return Data.ChatIdleMs > 0 ? Data.ChatIdleMs / 1000 : 60;
         }
 
         public static void SetChatIdle(int seconds)
