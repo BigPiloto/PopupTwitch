@@ -13,7 +13,9 @@ Ler em 🇧🇷 [Português Brasil](README/pt-BR.md)
 # 🎬 Pop-up Twitch Messages
 
 Windows desktop application built in **C# (.NET 8)** that displays **real-time pop-up alerts for Twitch chat activity**.  
+
 It monitors the Twitch channel defined in the settings and shows configurable on-screen notifications whenever viewers send messages — so you’ll never miss a chat message again.  
+
 You can customize appearance, duration, idle time, notification sound, and overall pop-up behavior through a modern and simple interface.
 
 ---
@@ -21,7 +23,9 @@ You can customize appearance, duration, idle time, notification sound, and overa
 ## 🖥️ Overview
 
 **Pop-up Twitch** is a lightweight and fully local tool designed for streamers who want to be notified when new chat messages arrive — **without displaying the message content or Twitch events**, and without relying on browser extensions or external services.  
+
 Ideal for those who get deeply focused on the game and just need a visual or sound reminder that there’s chat activity.  
+
 No browser, plugins, or external authentication required.
 
 Key features:
@@ -40,7 +44,6 @@ Get the latest version from the [**Releases**](https://github.com/BigPiloto/Popu
 > File: `Pop-upTwitch-v2-Installer.exe`
 
 After downloading, run the installer and follow the on-screen instructions.  
-Requires **.NET Desktop Runtime 8.0** (available at [dotnet.microsoft.com](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)).
 
 ---
 
@@ -73,7 +76,7 @@ PopupTwitch/
 
 ---
 
-## 🚀 Build Instructions
+## 🚀 Build Instructions (Manual installation)
 
 1. Install .NET SDK 8.0  
 2. From the project root, run:  
@@ -85,11 +88,12 @@ PopupTwitch/
 
 ## 🧾 License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 📬 Support
 
 Open an [Issue](https://github.com/BigPiloto/PopupTwitch/issues)
+
 Author: BigPiloto
