@@ -8,7 +8,7 @@
 
 ---
 
-Ler em [Português Brasil](README/pt-BR.md)
+Ler em 🇧🇷 [Português Brasil](README/pt-BR.md)
 
 # 🎬 Pop-up Twitch Messages
 
