@@ -6,6 +6,10 @@
 ![Último commit](https://img.shields.io/github/last-commit/BigPiloto/PopupTwitch.svg)
 ![Licença](https://img.shields.io/github/license/BigPiloto/PopupTwitch.svg)
 
+---
+
+Read in 🇺🇸 [English](../README.md)
+
 # 🎬 Pop-up de Mensagens da Twitch
 
 Aplicativo desktop para Windows desenvolvido em **C# (.NET 8)** que exibe **alertas pop-up em tempo real para atividades no chat da Twitch**.
