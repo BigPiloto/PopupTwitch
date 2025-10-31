@@ -179,19 +179,22 @@ namespace PopupTwitch
 
         public static string GetIdioma()
         {
-            if (string.IsNullOrEmpty(Data.Idioma))
+            try
             {
-                try
+                string sistema = System.Globalization.CultureInfo.CurrentUICulture.Name;
+
+                if (string.IsNullOrEmpty(Data.Idioma) || Data.Idioma != sistema)
                 {
-                    string sistema = System.Globalization.CultureInfo.InstalledUICulture.Name;
                     Data.Idioma = sistema;
+                    Save();
                 }
-                catch
-                {
-                    Data.Idioma = "pt-BR";
-                }
-                Save();
             }
+            catch
+            {
+                if (string.IsNullOrEmpty(Data.Idioma))
+                    Data.Idioma = "pt-BR";
+            }
+            
             return Data.Idioma;
         }
     }
