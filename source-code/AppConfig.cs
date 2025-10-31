@@ -20,7 +20,7 @@ namespace PopupTwitch
             public double PopupWidth { get; set; } = -1;
             public double PopupHeight { get; set; } = -1;
             public int PopupDuration { get; set; } = 3000;
-            public int ChatIdleMs { get; set; } = 5000;
+            public int ChatIdleMs { get; set; } = 60000;
             public string PopupCorFundo { get; set; } = "#000000";
             public string PopupCorTexto { get; set; } = "#FFFFFF";
             public int PopupRaio { get; set; } = 30;
