@@ -13,7 +13,9 @@ Read in 🇺🇸 [English](../README.md)
 # 🎬 Pop-up de Mensagens da Twitch
 
 Aplicativo desktop para Windows desenvolvido em **C# (.NET 8)** que exibe **alertas pop-up em tempo real para atividades no chat da Twitch**.
+
 Ele monitora as mensagens do canal da Twitch definido nas configurações e exibe notificações configuráveis ​​na tela sempre que os espectadores enviam mensagens, assim você nunca mais irá perder uma mensagem de seus viewers.
+
 Permite configurar aparência, duração, tempo ocioso, som de notificação e demais comportamento dos pop-ups através de uma interface moderna e simples.
 
 ---
@@ -21,7 +23,9 @@ Permite configurar aparência, duração, tempo ocioso, som de notificação e d
 ## 🖥️ Visão Geral
 
 O **Pop-up Twitch** é uma ferramenta leve e totalmente local, criada para streamers que desejam ser avisados quando há novas mensagens no chat, **sem exibir o conteúdo das mensagens nem eventos do canal**, sem depender de extensões de navegador ou serviços externos.
+
 Ideal para quem fica totalmente focado no jogo e quer apenas um lembrete visual ou sonoro de que há atividade no chat.
+
 Não requer navegador, plugins nem autenticação externa.
 
 Principais recursos:
@@ -72,7 +76,7 @@ PopupTwitch/
 
 ---
 
-## 🚀 Instruções de Build
+## 🚀 Instruções de Build (instalação manual)
 
 1. Instale o .NET SDK 8.0  
 2. No diretório raiz do projeto, execute:  
@@ -83,13 +87,14 @@ PopupTwitch/
 ---
 
 ## 🧾 Licença
-Este projeto está licenciado sob a MIT License. Consulte o arquivo LICENSE para mais detalhes.
+Este projeto está licenciado sob a MIT License. Consulte o arquivo [LICENSE](../LICENSE) para mais detalhes.
 
 ---
 
 ## 📬 Suporte
 
 Abra uma [Issue](https://github.com/BigPiloto/PopupTwitch/issues)
+
 Autor: **BigPiloto**
 
 
