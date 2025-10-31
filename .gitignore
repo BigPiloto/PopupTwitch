@@ -1,7 +1,6 @@
 # Build artifacts
 bin/
 obj/
-publish/
 
 # Visual Studio / VS Code
 .vs/
