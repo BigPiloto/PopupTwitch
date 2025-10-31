@@ -40,7 +40,6 @@ Get the latest version from the [**Releases**](https://github.com/BigPiloto/Popu
 > File: `Pop-upTwitch-v2-Installer.exe`
 
 After downloading, run the installer and follow the on-screen instructions.  
-Requires **.NET Desktop Runtime 8.0** (available at [dotnet.microsoft.com](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)).
 
 ---
 
