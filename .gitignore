@@ -10,3 +10,5 @@ obj/
 # Instaladores
 *.exe
 *.msi
+
+config.json

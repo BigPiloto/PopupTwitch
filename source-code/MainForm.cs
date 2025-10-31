@@ -120,7 +120,7 @@ namespace PopupTwitch
 
             try
             {
-                string staticPath = Path.Combine(Application.StartupPath, "Resources", "gear_static.png");
+                string staticPath = Path.Combine(Application.StartupPath, "Assets", "gear_static.png");
                 if (File.Exists(staticPath))
                 {
                     using (var img = Image.FromFile(staticPath))
