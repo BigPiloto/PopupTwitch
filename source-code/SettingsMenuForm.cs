@@ -11,7 +11,6 @@ namespace PopupTwitch
             this.Text = Strings.Get("Title_Settings");
             this.StartPosition = FormStartPosition.CenterParent;
             this.Width = 300;
-            this.Height = 520;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -56,6 +55,7 @@ namespace PopupTwitch
             AddButton("Btn_PopupStyle", (s, e) => new PopupStyleForm().ShowDialog());
             AddButton("Btn_SoundSettings", (s, e) => new SonsForm().ShowDialog());
             AddButton("Btn_Language", (s, e) => new LanguageForm().ShowDialog());
+            topo += 40;
             AddButton("Btn_Feedback", (s, e) =>
             {
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
@@ -73,6 +73,9 @@ namespace PopupTwitch
                 });
             });
             AddButton("Btn_Close", (s, e) => Close());
+
+            int margemInferior = 40;
+            this.Height = topo + margemInferior;
         }
     }
 }
