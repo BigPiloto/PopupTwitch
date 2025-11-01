@@ -90,6 +90,8 @@
   <data name="Btn_PopupStyle" xml:space="preserve"><value>Estilizar pop-up</value></data>
   <data name="Btn_SoundSettings" xml:space="preserve"><value>Configuração de som</value></data>
   <data name="Btn_Close" xml:space="preserve"><value>Fechar</value></data>
+  <data name="Btn_Feedback" xml:space="preserve"><value>Enviar feedback</value></data>
+  <data name="Btn_Issue" xml:space="preserve"><value>Reportar problema no GitHub</value></data>
 
   <!-- Idioma -->
   <data name="Btn_Language" xml:space="preserve"><value>Idioma</value></data>

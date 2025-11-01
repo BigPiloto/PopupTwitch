@@ -11,7 +11,7 @@ namespace PopupTwitch
             this.Text = Strings.Get("Title_Settings");
             this.StartPosition = FormStartPosition.CenterParent;
             this.Width = 300;
-            this.Height = 440;
+            this.Height = 520;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -56,6 +56,22 @@ namespace PopupTwitch
             AddButton("Btn_PopupStyle", (s, e) => new PopupStyleForm().ShowDialog());
             AddButton("Btn_SoundSettings", (s, e) => new SonsForm().ShowDialog());
             AddButton("Btn_Language", (s, e) => new LanguageForm().ShowDialog());
+            AddButton("Btn_Feedback", (s, e) =>
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "https://github.com/BigPiloto/PopupTwitch/issues",
+                    UseShellExecute = true
+                });
+            });
+            AddButton("Btn_Issue", (s, e) =>
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "https://github.com/BigPiloto/PopupTwitch/issues",
+                    UseShellExecute = true
+                });
+            });
             AddButton("Btn_Close", (s, e) => Close());
         }
     }
