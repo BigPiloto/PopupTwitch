@@ -60,7 +60,7 @@ namespace PopupTwitch
             {
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
-                    FileName = "https://github.com/BigPiloto/PopupTwitch/issues",
+                    FileName = "https://popuptwitch.meularsmart.com/#Contato",
                     UseShellExecute = true
                 });
             });
@@ -74,7 +74,7 @@ namespace PopupTwitch
             });
             AddButton("Btn_Close", (s, e) => Close());
 
-            int margemInferior = 40;
+            int margemInferior = 60;
             this.Height = topo + margemInferior;
         }
     }

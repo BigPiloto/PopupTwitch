@@ -243,6 +243,12 @@ namespace PopupTwitch
                             SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW
                         );
 
+                        const int GWL_EXSTYLE = -20;
+                        const int WS_EX_TRANSPARENT = 0x20;
+                        const int WS_EX_TOOLWINDOW = 0x80;
+                        int exStyle = GetWindowLong(popup.Handle, GWL_EXSTYLE);
+                        SetWindowLong(popup.Handle, GWL_EXSTYLE, exStyle | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW);
+
                         popup.Activate();
                     };
 
@@ -258,6 +264,12 @@ namespace PopupTwitch
                 popupThread.Start();
             }
         }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
