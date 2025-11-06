@@ -22,19 +22,27 @@ You can customize appearance, duration, idle time, notification sound, and overa
 
 ## 🖥️ Overview
 
-**Pop-up Twitch** is a lightweight and fully local tool designed for streamers who want to be notified when new chat messages arrive — **without displaying the message content or Twitch events**, and without relying on browser extensions or external services.  
+**Pop-up Twitch** is a lightweight and fully local tool for streamers who want to know when there’s chat activity — **without showing message contents**, and without needing a browser extension or authentication.
 
-Ideal for those who get deeply focused on the game and just need a visual or sound reminder that there’s chat activity.  
+Perfect for streamers who stay focused on gameplay and just need a quick **visual** or **sound cue** that someone sent a message. 
 
 No browser, plugins, or external authentication required.
 
 Key features:
-- Displays custom pop-up alerts over any window  
-- Option to ignore specific users (perfect for avoiding notifications from bots)  
-- Full control over duration, position, size, and style (colors, fonts, rounded corners)  
-- Real-time preview and idle-time adjustment  
-- Clean, intuitive configuration interface  
-- Optional sound notification (disabled by default)  
+- Show pop-up alerts above any window
+- Ignore specific users (e.g., bots)
+- Control duration, position, size, opacity, and corner radius
+- Customize colors, fonts, and displayed text
+- Real-time preview and sound test
+- Lightweight and fast — runs locally
+
+---
+
+## 🌐 Official Links
+
+🌍 Website: https://popuptwitch.meularsmart.com/en/
+
+📘 Documentation: https://popuptwitch.meularsmart.com/en/documentacao/introducao/
 
 ---
 
@@ -56,6 +64,8 @@ After downloading, run the installer and follow the on-screen instructions.
 | ⏱️ **Idle time** | Define the minimum interval between consecutive alerts |
 | ⏱️ **Duration control** | Set how long the pop-up remains visible |
 | 🖼️ **Live preview** | Instantly see all design changes |
+| 🧭 **Position editor** | Drag and resize the popup on screen |
+| 👁️ **Non-clickable mode** | Popup no longer blocks mouse or window focus |
 | 🔧 **Modern interface** | Clean and user-friendly layout |
 
 ---
@@ -94,6 +104,12 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 📬 Support
 
-Open an [Issue](https://github.com/BigPiloto/PopupTwitch/issues)
+🐞 Open an [Issue](https://github.com/BigPiloto/PopupTwitch/issues)
+
+🌐 Visit the website: https://popuptwitch.meularsmart.com/en/
+
+📘 Documentation: [Documentation Portal](https://popuptwitch.meularsmart.com/en/documentacao/introducao/)
+
+Support the project: https://popuptwitch.meularsmart.com/en/product/apoie-o-projeto-%e2%98%95/
 
 Author: BigPiloto

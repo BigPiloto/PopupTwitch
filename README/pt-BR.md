@@ -14,27 +14,35 @@ Read in 🇺🇸 [English](../README.md)
 
 Aplicativo desktop para Windows desenvolvido em **C# (.NET 8)** que exibe **alertas pop-up em tempo real para atividades no chat da Twitch**.
 
-Ele monitora as mensagens do canal da Twitch definido nas configurações e exibe notificações configuráveis ​​na tela sempre que os espectadores enviam mensagens, assim você nunca mais irá perder uma mensagem de seus viewers.
+Ele monitora o canal definido nas configurações e mostra notificações configuráveis sempre que os espectadores enviam mensagens — assim você nunca mais perderá a interação do chat.
 
-Permite configurar aparência, duração, tempo ocioso, som de notificação e demais comportamento dos pop-ups através de uma interface moderna e simples.
+Permite personalizar aparência, duração, tempo de inatividade, som de notificação e comportamento geral do pop-up em uma interface moderna e simples.
 
 ---
 
 ## 🖥️ Visão Geral
 
-O **Pop-up Twitch** é uma ferramenta leve e totalmente local, criada para streamers que desejam ser avisados quando há novas mensagens no chat, **sem exibir o conteúdo das mensagens nem eventos do canal**, sem depender de extensões de navegador ou serviços externos.
+O **Pop-up Twitch** é uma ferramenta leve e totalmente local para streamers que desejam saber quando há atividade no chat — **sem exibir o conteúdo das mensagens e sem depender de extensões de navegador ou autenticação externa**.
 
-Ideal para quem fica totalmente focado no jogo e quer apenas um lembrete visual ou sonoro de que há atividade no chat.
+Ideal para quem se mantém concentrado no jogo e quer apenas um lembrete visual ou sonoro quando alguém envia uma mensagem.
 
 Não requer navegador, plugins nem autenticação externa.
 
 Principais recursos:
-- Exibe pop-ups personalizados sobre qualquer janela
-- Possibilidade de ignorar usuários (perfeito para não receber notificação quando seu bot falar)
-- Controle de duração, posição, tamanho e estilo (cores, fontes, cantos arredondados)  
-- Visualização em tempo real e ajuste de ociosidade
-- Interface de configuração intuitiva e limpa
-- Notificação sonora (padrão: desativado)
+- Exibe alertas sobre qualquer janela
+- Permite ignorar usuários específicos (como bots)
+- Controle total sobre duração, posição, tamanho, opacidade e raio das bordas
+- Personalização completa de cores, fontes e texto exibido
+- Pré-visualização em tempo real e teste de som
+- Rápido, leve e totalmente offline
+
+---
+
+## 🌐 Links Oficiais
+
+🌍 Site: https://popuptwitch.meularsmart.com/
+
+📘 Documentação: https://popuptwitch.meularsmart.com/documentacao/introducao/
 
 ---
 
@@ -56,6 +64,8 @@ Após o download, execute o instalador e siga as instruções na tela.
 | ⏱️ **Tempo ocioso** | Defina o intervalo mínimo entre alertas consecutivos |
 | ⏱️ **Controle de duração** | Defina por quanto tempo o pop-up permanece visível |
 | 🖼️ **Prévia ao vivo** | Veja as alterações de design instantaneamente |
+| 🧭 **Editor de posição** | Arraste e redimensione o pop-up na tela |
+| 👁️ **Modo não clicável** | O pop-up não bloqueia mais o mouse ou foco da janela |
 | 🔧 **Interface moderna** | Layout limpo e fácil de usar |
 
 ---
@@ -93,7 +103,13 @@ Este projeto está licenciado sob a MIT License. Consulte o arquivo [LICENSE](..
 
 ## 📬 Suporte
 
-Abra uma [Issue](https://github.com/BigPiloto/PopupTwitch/issues)
+🐞 Abra uma [Issue](https://github.com/BigPiloto/PopupTwitch/issues)
+
+🌐 Site oficial: https://popuptwitch.meularsmart.com/
+
+📘 Documentação: [Documentação](https://popuptwitch.meularsmart.com/documentacao/introducao/)
+
+☕ Apoie o projeto: https://popuptwitch.meularsmart.com/product/apoie-o-projeto-%e2%98%95/
 
 Autor: **BigPiloto**
 
