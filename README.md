@@ -76,8 +76,6 @@ PopupTwitch/
 
 ├── source-code/...............→ Main source code (C# / .NET)  
 
-├── publish/.........................→ Build ready for distribution  
-
 ├── popup-installer............→ Installer files  
 
 ├── README.md  
@@ -89,10 +87,12 @@ PopupTwitch/
 ## 🚀 Build Instructions (Manual installation)
 
 1. Install .NET SDK 8.0  
-2. From the project root, run:  
+2. Clone this repository and open the /source-code folder
+3. From the project root, run:  
    ```bash
    dotnet publish -c Release -r win-x64 --self-contained false -o "publish"
-3. The final build will be in the /publish folder.
+4. The final build will be in the /publish folder.
+(this folder is not tracked in the repository — it’s for your local build only).
 
 ---
 

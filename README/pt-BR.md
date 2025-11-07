@@ -76,8 +76,6 @@ PopupTwitch/
 
 ├── source-code/...............→ Código-fonte principal (C# / .NET)  
 
-├── publish/.........................→ Build pronta para distribuição  
-
 ├── popup-installer............→ Instalador
 
 ├── README.md  
@@ -89,10 +87,12 @@ PopupTwitch/
 ## 🚀 Instruções de Build (instalação manual)
 
 1. Instale o .NET SDK 8.0  
+2. Acesse a pasta /source-code do projeto
 2. No diretório raiz do projeto, execute:  
    ```bash
    dotnet publish -c Release -r win-x64 --self-contained false -o "publish"
 3. O build final estará na pasta /publish.
+(essa pasta não faz parte do repositório, servindo apenas para builds locais).
 
 ---
 

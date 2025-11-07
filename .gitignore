@@ -8,9 +8,9 @@ obj/
 *.suo
 
 # Instaladores
-*.exe
 *.msi
 
 config.json
 
 /source-code/publish
+/publish
