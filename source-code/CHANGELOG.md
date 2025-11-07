@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/BigPiloto/PopupTwitch/compare/v2.2.2...v2.3.0) (2025-11-07)
+
+
+### Features
+
+* **auto-update:** add automatic installer download and execution ([bac53d0](https://github.com/BigPiloto/PopupTwitch/commit/bac53d0403f1fa2afdaae7b6d79235e5758b25f7))
+* **auto-update:** add automatic installer download and execution ([ddd8a75](https://github.com/BigPiloto/PopupTwitch/commit/ddd8a75f0aa182914464299efc9037946308ef18))
+
 ### [2.2.2](https://github.com/BigPiloto/PopupTwitch/compare/v2.2.1...v2.2.2) (2025-11-07)
 
 
