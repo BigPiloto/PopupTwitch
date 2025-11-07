@@ -69,6 +69,8 @@
   <data name="Btn_Change" xml:space="preserve"><value>Alterar</value></data>
   <data name="Msg_StyleSaved" xml:space="preserve"><value>Estilo salvo com sucesso!</value></data>
   <data name="Msg_StyleReset" xml:space="preserve"><value>Estilo restaurado para o padrão.</value></data>
+  <data name="Lbl_Font" xml:space="preserve"><value>Fonte e tamanho</value></data>
+  <data name="Btn_ChangeFont" xml:space="preserve"><value>Alterar fonte e tamanho</value></data>
 
   <!-- SonsForm -->
   <data name="Title_SoundSettings" xml:space="preserve"><value>Configurações de Som</value></data>

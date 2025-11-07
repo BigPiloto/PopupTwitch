@@ -69,6 +69,8 @@
   <data name="Btn_Change" xml:space="preserve"><value>Change</value></data>
   <data name="Msg_StyleSaved" xml:space="preserve"><value>Style saved successfully!</value></data>
   <data name="Msg_StyleReset" xml:space="preserve"><value>Style restored to default.</value></data>
+  <data name="Lbl_Font" xml:space="preserve"><value>Font and size</value></data>
+  <data name="Btn_ChangeFont" xml:space="preserve"><value>Change font and size</value></data>
 
   <!-- SonsForm -->
   <data name="Title_SoundSettings" xml:space="preserve"><value>Sound Settings</value></data>

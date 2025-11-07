@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text.Json;
 using PopupTwitch.Resources;
@@ -29,6 +30,8 @@ namespace PopupTwitch
             public bool SomAtivo { get; set; } = false;
             public string SomArquivo { get; set; } = "";
             public string Idioma { get; set; } = "pt-BR";
+            public string PopupFonte { get; set; } = "Segoe UI";
+            public float PopupTamanhoFonte { get; set; } = 12f;
         }
 
         private static ConfigData Data = Load();
@@ -134,7 +137,7 @@ namespace PopupTwitch
             Save();
         }
 
-        public static (Color Fundo, Color Texto, int Raio, string Mensagem, double Opacidade) GetPopupStyle()
+        public static (Color Fundo, Color Texto, int Raio, string Mensagem, double Opacidade, string Fonte, float Tamanho) GetPopupStyle()
         {
             string fundo = Data.PopupCorFundo ?? "#000000";
             string texto = Data.PopupCorTexto ?? "#FFFFFF";
@@ -143,20 +146,25 @@ namespace PopupTwitch
                 ? Strings.Default_PopupMessage
                 : Data.PopupMensagem;
             double opacidade = Data.PopupOpacity > 0 ? Data.PopupOpacity : 0.85;
+            string fonte = string.IsNullOrEmpty(Data.PopupFonte) ? "Segoe UI" : Data.PopupFonte;
+            float tamanho = Data.PopupTamanhoFonte > 0 ? Data.PopupTamanhoFonte : 12f;
 
-            return (ColorTranslator.FromHtml(fundo), ColorTranslator.FromHtml(texto), raio, mensagem, opacidade);
+            return (ColorTranslator.FromHtml(fundo), ColorTranslator.FromHtml(texto), raio, mensagem, opacidade, fonte, tamanho);
         }
 
-        public static void SetPopupStyle(Color fundo, Color texto, int raio, string mensagem, double opacidade)
+        public static void SetPopupStyle(Color fundo, Color texto, int raio, string mensagem, double opacidade, string fonte, float tamanho)
         {
             Data.PopupCorFundo = ColorTranslator.ToHtml(fundo);
             Data.PopupCorTexto = ColorTranslator.ToHtml(texto);
             Data.PopupRaio = raio;
             Data.PopupMensagem = mensagem;
             Data.PopupOpacity = Math.Clamp(opacidade, 0.1, 1.0);
+            Data.PopupFonte = fonte ?? "Segoe UI";
+            Data.PopupTamanhoFonte = tamanho > 0 ? tamanho : 12f;
             Save();
         }
 
+        // --- Som ---
         public static (bool Ativo, string Caminho) GetSom()
         {
             bool ativo = Data.SomAtivo;
@@ -171,6 +179,7 @@ namespace PopupTwitch
             Save();
         }
 
+        // --- Idioma ---
         public static void SetIdioma(string idioma)
         {
             Data.Idioma = idioma;

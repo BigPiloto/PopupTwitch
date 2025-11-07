@@ -190,7 +190,7 @@ namespace PopupTwitch
             {
                 Thread popupThread = new Thread(() =>
                 {
-                    var (fundo, texto, raio, mensagem, opacidade) = AppConfig.GetPopupStyle();
+                    var (fundo, texto, raio, mensagem, opacidade, fonte, tamanho) = AppConfig.GetPopupStyle();
                     var (xPct, yPct, wPct, hPct) = AppConfig.GetPopupData();
 
                     var popup = new Form
@@ -228,7 +228,7 @@ namespace PopupTwitch
                         Dock = DockStyle.Fill,
                         ForeColor = texto,
                         TextAlign = ContentAlignment.MiddleCenter,
-                        Font = new Font("Arial", 14, FontStyle.Bold)
+                        Font = new Font(fonte, tamanho, FontStyle.Bold)
                     };
                     popup.Controls.Add(lbl);
 
