@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using PopupTwitch.Resources;
+using System.Reflection;
 
 namespace PopupTwitch
 {
@@ -76,6 +77,28 @@ namespace PopupTwitch
 
             int margemInferior = 60;
             this.Height = topo + margemInferior;
+
+            // Obtém versão "limpa" (sem hash)
+            string version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "N/A";
+
+            // Label de versão
+            var lblVersao = new Label
+            {
+                Text = $"Versão {version}",
+                AutoSize = true,
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Font = new System.Drawing.Font("Segoe UI", 8, System.Drawing.FontStyle.Regular),
+                ForeColor = System.Drawing.Color.Gray,
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+            };
+            Controls.Add(lblVersao);
+
+            // Ajusta a posição depois que o formulário estiver carregado
+            this.Load += (s, e) =>
+            {
+                lblVersao.Left = (this.ClientSize.Width - lblVersao.Width) / 2;
+                lblVersao.Top = this.ClientSize.Height - lblVersao.Height - 8;
+            };
         }
     }
 }
