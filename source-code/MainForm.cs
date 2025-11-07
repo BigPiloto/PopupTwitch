@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.IO;
 using PopupTwitch.Resources;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace PopupTwitch
 {
@@ -35,6 +37,7 @@ namespace PopupTwitch
         public MainForm()
         {
             InitializeComponent();
+            CheckForUpdate();
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = Strings.Get("Title_Main");
             this.Width = 300;
@@ -270,6 +273,53 @@ namespace PopupTwitch
 
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        private async void CheckForUpdate()
+        {
+            try
+            {
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Add("User-Agent", "Pop-upTwitch");
+
+                var json = await client.GetStringAsync("https://api.github.com/repos/BigPiloto/PopupTwitch/releases/latest");
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                string latestTag = root.GetProperty("tag_name").GetString() ?? "";
+                string latestUrl = root.GetProperty("html_url").GetString() ?? "";
+                string assetUrl = "";
+
+                if (root.TryGetProperty("assets", out var assets) && assets.GetArrayLength() > 0)
+                    assetUrl = assets[0].GetProperty("browser_download_url").GetString() ?? "";
+
+                string currentVersion = "v" + Application.ProductVersion;
+
+                if (!string.Equals(latestTag, currentVersion, StringComparison.OrdinalIgnoreCase))
+                {
+                    var message =
+                        $"Nova versão disponível: {latestTag}\n" +
+                        $"Versão atual: {currentVersion}\n\n" +
+                        "Deseja baixar a nova versão?";
+
+                    var result = MessageBox.Show(message, "Atualização disponível",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        var urlToOpen = !string.IsNullOrEmpty(assetUrl) ? assetUrl : latestUrl;
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                        {
+                            FileName = urlToOpen,
+                            UseShellExecute = true
+                        });
+                    }
+                }
+            }
+            catch
+            {
+                // ignora erros silenciosamente
+            }
+        }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
