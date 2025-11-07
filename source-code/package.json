@@ -1,6 +1,6 @@
 {
   "name": "popup-twitch",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "Desktop app for Twitch chat pop-up alerts built with C# (.NET 8).",
   "main": "index.js",
   "scripts": {
