@@ -282,6 +282,7 @@ namespace PopupTwitch
                 using var client = new HttpClient();
                 client.DefaultRequestHeaders.Add("User-Agent", "Pop-upTwitch");
 
+                // Obtém a última release pública do GitHub
                 var json = await client.GetStringAsync("https://api.github.com/repos/BigPiloto/PopupTwitch/releases/latest");
                 using var doc = JsonDocument.Parse(json);
                 var root = doc.RootElement;
@@ -307,12 +308,28 @@ namespace PopupTwitch
 
                     if (result == DialogResult.Yes)
                     {
-                        var urlToOpen = !string.IsNullOrEmpty(assetUrl) ? assetUrl : latestUrl;
-                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                        try
                         {
-                            FileName = urlToOpen,
-                            UseShellExecute = true
-                        });
+                            string tempPath = Path.Combine(Path.GetTempPath(), "Pop-upTwitch-Installer.exe");
+
+                            using var http = new HttpClient();
+                            var bytes = await http.GetByteArrayAsync(assetUrl);
+                            await File.WriteAllBytesAsync(tempPath, bytes);
+
+                            MessageBox.Show("O instalador da nova versão será iniciado.", "Atualização", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                            {
+                                FileName = tempPath,
+                                UseShellExecute = true
+                            });
+
+                            Application.Exit();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Falha ao baixar a atualização.\n\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
