@@ -8,6 +8,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <SatelliteResourceLanguages>en;pt-BR</SatelliteResourceLanguages>
+
+    <AppVersion>2.2.1</AppVersion>
+
+    <AssemblyVersion>$(AppVersion)</AssemblyVersion>
+    <FileVersion>$(AppVersion)</FileVersion>
+    <Version>$(AppVersion)</Version>
+    <ProductVersion>$(AppVersion)</ProductVersion>
+    <AssemblyInformationalVersion>$(AppVersion)</AssemblyInformationalVersion>
+
+    <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
 
   <ItemGroup>

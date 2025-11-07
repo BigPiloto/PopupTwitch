@@ -10,6 +10,7 @@ using System.IO;
 using PopupTwitch.Resources;
 using System.Net.Http;
 using System.Text.Json;
+using System.Reflection;
 
 namespace PopupTwitch
 {
@@ -292,7 +293,7 @@ namespace PopupTwitch
                 if (root.TryGetProperty("assets", out var assets) && assets.GetArrayLength() > 0)
                     assetUrl = assets[0].GetProperty("browser_download_url").GetString() ?? "";
 
-                string currentVersion = "v" + Application.ProductVersion;
+                string currentVersion = "v" + Assembly.GetExecutingAssembly().GetName().Version?.ToString(3);
 
                 if (!string.Equals(latestTag, currentVersion, StringComparison.OrdinalIgnoreCase))
                 {
