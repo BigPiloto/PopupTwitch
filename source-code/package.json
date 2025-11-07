@@ -1,6 +1,6 @@
 {
   "name": "popup-twitch",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Desktop app for Twitch chat pop-up alerts built with C# (.NET 8).",
   "main": "index.js",
   "scripts": {
@@ -9,5 +9,12 @@
   },
   "author": "BigPiloto",
   "license": "MIT",
-  "keywords": ["twitch", "popup", "alerts", "windows", "dotnet", "bigpiloto"]
+  "keywords": [
+    "twitch",
+    "popup",
+    "alerts",
+    "windows",
+    "dotnet",
+    "bigpiloto"
+  ]
 }
