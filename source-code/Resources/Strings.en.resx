@@ -44,6 +44,14 @@
   <data name="Btn_Disconnect" xml:space="preserve"><value>Disconnect</value></data>
   <data name="Btn_Connecting" xml:space="preserve"><value>Connecting...</value></data>
   <data name="Btn_Disconnecting" xml:space="preserve"><value>Disconnecting...</value></data>
+  <data name="Msg_NewVersionAvailable" xml:space="preserve"><value>New version available</value></data>
+  <data name="Msg_CurrentVersion" xml:space="preserve"><value>Current version</value></data>
+  <data name="Msg_DownloadQuestion" xml:space="preserve"><value>Do you want to download the new version?</value></data>
+  <data name="Msg_UpdateAvailable" xml:space="preserve"><value>Update available</value></data>
+  <data name="Msg_InstallerStarting" xml:space="preserve"><value>The installer for the new version will start.</value></data>
+  <data name="Msg_UpdateTitle" xml:space="preserve"><value>Update</value></data>
+  <data name="Msg_UpdateFailed" xml:space="preserve"><value>Failed to download the update.</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>Error</value></data>
 
   <!-- PopupDurationForm -->
   <data name="Title_PopupDuration" xml:space="preserve"><value>Popup Duration</value></data>

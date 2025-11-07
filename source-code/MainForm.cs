@@ -299,11 +299,11 @@ namespace PopupTwitch
                 if (!string.Equals(latestTag, currentVersion, StringComparison.OrdinalIgnoreCase))
                 {
                     var message =
-                        $"Nova versão disponível: {latestTag}\n" +
-                        $"Versão atual: {currentVersion}\n\n" +
-                        "Deseja baixar a nova versão?";
+                        $"{Strings.Get("Msg_NewVersionAvailable")}: {latestTag}\n" +
+                        $"{Strings.Get("Msg_CurrentVersion")}: {currentVersion}\n\n" +
+                        Strings.Get("Msg_DownloadQuestion");
 
-                    var result = MessageBox.Show(message, "Atualização disponível",
+                    var result = MessageBox.Show(message, Strings.Get("Msg_UpdateAvailable"),
                         MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
                     if (result == DialogResult.Yes)
@@ -316,7 +316,9 @@ namespace PopupTwitch
                             var bytes = await http.GetByteArrayAsync(assetUrl);
                             await File.WriteAllBytesAsync(tempPath, bytes);
 
-                            MessageBox.Show("O instalador da nova versão será iniciado.", "Atualização", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show(Strings.Get("Msg_InstallerStarting"),
+                                Strings.Get("Msg_UpdateTitle"),
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                             {
@@ -328,7 +330,9 @@ namespace PopupTwitch
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Falha ao baixar a atualização.\n\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(Strings.Get("Msg_UpdateFailed") + "\n\n" + ex.Message,
+                                Strings.Get("Msg_ErrorTitle"),
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
