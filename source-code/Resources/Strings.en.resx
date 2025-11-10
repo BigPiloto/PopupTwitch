@@ -107,7 +107,7 @@
   <!-- Language -->
   <data name="Btn_Language" xml:space="preserve"><value>Language</value></data>
   <data name="Title_Language" xml:space="preserve"><value>Select language</value></data>
-  <data name="Msg_LanguageChanged" xml:space="preserve"><value>Language changed. Restart the application to apply changes.</value></data>
+  <data name="Msg_LanguageChanged" xml:space="preserve"><value>The language has been changed. The application will restart to apply the changes.</value></data>
   <data name="Opt_Portuguese" xml:space="preserve"><value>Portuguese (Brazil)</value></data>
   <data name="Opt_English" xml:space="preserve"><value>English</value></data>
   <data name="Lbl_SelectLanguage" xml:space="preserve"><value>Select the language:</value></data>

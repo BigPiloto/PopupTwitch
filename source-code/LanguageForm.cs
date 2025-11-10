@@ -73,12 +73,15 @@ namespace PopupTwitch
             string selecionado = comboIdioma.SelectedIndex == 1 ? "en-US" : "pt-BR";
             AppConfig.SetIdioma(selecionado);
 
-            MessageBox.Show(Strings.Get("Msg_LanguageChanged"),
+            MessageBox.Show(
+                Strings.Get("Msg_LanguageChanged"),
                 Strings.Get("Title_Info"),
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+                MessageBoxIcon.Information
+            );
 
-            Close();
+            System.Diagnostics.Process.Start(Application.ExecutablePath);
+            Application.Exit();
         }
     }
 }
