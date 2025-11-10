@@ -36,6 +36,7 @@ namespace PopupTwitch
             public float PopupTamanhoFonte { get; set; } = 12f;
             public bool IniciarComWindows { get; set; } = false;
             public bool AutoConectar { get; set; } = false;
+            public bool MostrarNaBandeja { get; set; } = false;
         }
 
         private static ConfigData Data = Load();
@@ -226,6 +227,15 @@ namespace PopupTwitch
                 key.SetValue(appName, appPath);
             else
                 key.DeleteValue(appName, false);
+        }
+
+        // --- Mostrar na bandeja ---
+        public static bool GetMostrarNaBandeja() => Data.MostrarNaBandeja;
+
+        public static void SetMostrarNaBandeja(bool ativo)
+        {
+            Data.MostrarNaBandeja = ativo;
+            Save();
         }
 
         // --- Auto Conectar ---

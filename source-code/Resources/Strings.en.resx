@@ -43,8 +43,6 @@
   <data name="Lbl_Channel" xml:space="preserve"><value>Twitch channel:</value></data>
   <data name="Btn_Connect" xml:space="preserve"><value>Connect</value></data>
   <data name="Btn_Disconnect" xml:space="preserve"><value>Disconnect</value></data>
-  <data name="Btn_Connecting" xml:space="preserve"><value>Connecting...</value></data>
-  <data name="Btn_Disconnecting" xml:space="preserve"><value>Disconnecting...</value></data>
   <data name="Msg_NewVersionAvailable" xml:space="preserve"><value>New version available</value></data>
   <data name="Msg_CurrentVersion" xml:space="preserve"><value>Current version</value></data>
   <data name="Msg_DownloadQuestion" xml:space="preserve"><value>Do you want to download the new version?</value></data>
@@ -104,6 +102,7 @@
   <data name="Btn_Feedback" xml:space="preserve"><value>Send Feedback</value></data>
   <data name="Btn_Issue" xml:space="preserve"><value>Report Issue on GitHub</value></data>
   <data name="Chk_StartupWithWindows" xml:space="preserve"><value>Start with Windows</value></data>
+  <data name="Chk_MinimizeToTray" xml:space="preserve"><value>Minimize to system tray</value></data>
 
   <!-- Language -->
   <data name="Btn_Language" xml:space="preserve"><value>Language</value></data>
@@ -117,7 +116,6 @@
   <data name="Btn_Open" xml:space="preserve"><value>Open</value></data>
   <data name="Btn_Exit" xml:space="preserve"><value>Exit</value></data>
   <data name="Msg_Disconnected" xml:space="preserve"><value>Successfully disconnected</value></data>
-  <data name="Msg_NotConnected" xml:space="preserve"><value>You are not connected</value></data>
   <data name="Msg_Connected" xml:space="preserve"><value>Successfully connected</value></data>
   <data name="Msg_NoChannel" xml:space="preserve"><value>No channel defined</value></data>
 </root>

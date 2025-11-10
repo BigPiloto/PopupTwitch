@@ -73,6 +73,22 @@ namespace PopupTwitch
             Controls.Add(chkIniciarComWindows);
             topo += espacamento + 10;
 
+            // --- Checkbox: minimizar para bandeja ---
+            var chkMostrarNaBandeja = new CheckBox
+            {
+                Text = Strings.Get("Chk_MinimizeToTray"),
+                Left = margemEsq,
+                Top = topo,
+                AutoSize = true,
+                Checked = AppConfig.GetMostrarNaBandeja()
+            };
+            chkMostrarNaBandeja.CheckedChanged += (s, e) =>
+            {
+                AppConfig.SetMostrarNaBandeja(chkMostrarNaBandeja.Checked);
+            };
+            Controls.Add(chkMostrarNaBandeja);
+            topo += espacamento + 10;
+
             AddButton("Btn_Feedback", (s, e) =>
             {
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo

@@ -45,12 +45,35 @@ namespace PopupTwitch
         public MainForm()
         {
             // Ícone da bandeja
+            Icon appIcon;
+            try
+            {
+                string iconPath = Path.Combine(Application.StartupPath, "Assets", "favicon.ico");
+                if (File.Exists(iconPath))
+                    appIcon = new Icon(iconPath);
+                else
+                    appIcon = SystemIcons.Application;
+            }
+            catch
+            {
+                // Fallback para o ícone padrão do sistema
+                appIcon = SystemIcons.Application;
+            }
+
             trayMenu = new ContextMenuStrip();
+
+            trayIcon = new NotifyIcon
+            {
+                Icon = appIcon,
+                ContextMenuStrip = trayMenu,
+                Text = "Pop-up Twitch",
+                Visible = true
+            };
 
             trayMenu.Items.Add(Strings.Get("Btn_Open"), null, (s, e) =>
             {
                 Show();
-                WindowState = FormWindowState.Normal;
+                CentralizarNaTela();
             });
 
             // botão conectar/desconectar dinâmico
@@ -66,10 +89,16 @@ namespace PopupTwitch
                 }
                 else
                 {
-                    string canalSalvo = AppConfig.GetCanal()?.Trim();
-                    if (!string.IsNullOrWhiteSpace(canalSalvo))
+                    // lê o campo da janela principal
+                    var txt = this.Controls["txtCanal"] as TextBox;
+                    string canalAtual = txt?.Text.Trim() ?? string.Empty;
+
+                    if (!string.IsNullOrWhiteSpace(canalAtual))
                     {
-                        Conectar(canalSalvo);
+                        // opcional: já salvar ao conectar
+                        AppConfig.SetCanal(canalAtual);
+
+                        Conectar(canalAtual);
                         MessageBox.Show(Strings.Get("Msg_Connected"),
                             "Pop-up Twitch", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -84,17 +113,47 @@ namespace PopupTwitch
 
             // submenu Configurações
             var configMenu = new ToolStripMenuItem(Strings.Get("Title_Settings"));
-            configMenu.DropDownItems.Add(Strings.Get("Btn_IgnoredUsers"), null, (s, e) => new IgnoredUsersForm().ShowDialog());
+            configMenu.DropDownItems.Add(Strings.Get("Btn_IgnoredUsers"), null, (s, e) =>
+            {
+                var f = new IgnoredUsersForm();
+                CentralizarNaTela(f);
+                f.ShowDialog();
+            });
             configMenu.DropDownItems.Add(Strings.Get("Btn_PopupPosition"), null, (s, e) =>
             {
                 using var pos = new PopupPositionForm(this);
                 pos.ShowDialog(this);
             });
-            configMenu.DropDownItems.Add(Strings.Get("Btn_PopupDuration"), null, (s, e) => new PopupDurationForm().ShowDialog());
-            configMenu.DropDownItems.Add(Strings.Get("Btn_ChatIdle"), null, (s, e) => new ChatIdleForm().ShowDialog());
-            configMenu.DropDownItems.Add(Strings.Get("Btn_PopupStyle"), null, (s, e) => new PopupStyleForm().ShowDialog());
-            configMenu.DropDownItems.Add(Strings.Get("Btn_SoundSettings"), null, (s, e) => new SonsForm().ShowDialog());
-            configMenu.DropDownItems.Add(Strings.Get("Btn_Language"), null, (s, e) => new LanguageForm().ShowDialog());
+            configMenu.DropDownItems.Add(Strings.Get("Btn_PopupDuration"), null, (s, e) =>
+            {
+                var f = new PopupDurationForm();
+                CentralizarNaTela(f);
+                f.ShowDialog();
+            });
+            configMenu.DropDownItems.Add(Strings.Get("Btn_ChatIdle"), null, (s, e) =>
+            {
+                var f = new ChatIdleForm();
+                CentralizarNaTela(f);
+                f.ShowDialog();
+            });
+            configMenu.DropDownItems.Add(Strings.Get("Btn_PopupStyle"), null, (s, e) =>
+            {
+                var f = new PopupStyleForm();
+                CentralizarNaTela(f);
+                f.ShowDialog();
+            });
+            configMenu.DropDownItems.Add(Strings.Get("Btn_SoundSettings"), null, (s, e) =>
+            {
+                var f = new SonsForm();
+                CentralizarNaTela(f);
+                f.ShowDialog();
+            });
+            configMenu.DropDownItems.Add(Strings.Get("Btn_Language"), null, (s, e) =>
+            {
+                var f = new LanguageForm();
+                CentralizarNaTela(f);
+                f.ShowDialog();
+            });
             trayMenu.Items.Add(configMenu);
 
             // links externos
@@ -119,15 +178,6 @@ namespace PopupTwitch
             // sair
             trayMenu.Items.Add("-");
             trayMenu.Items.Add(Strings.Get("Btn_Exit"), null, (s, e) => Application.Exit());
-
-            trayIcon = new NotifyIcon
-            {
-                Icon = SystemIcons.Application,
-                ContextMenuStrip = trayMenu,
-                Text = "Pop-up Twitch",
-                Visible = true
-            };
-
             trayIcon.DoubleClick += (s, e) => { Show(); WindowState = FormWindowState.Normal; };
 
             InitializeComponent();
@@ -254,6 +304,8 @@ namespace PopupTwitch
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = true;
+
+            CentralizarNaTela();
         }
 
         private void Conectar(string canal)
@@ -312,81 +364,95 @@ namespace PopupTwitch
                 return;
             }
 
-            var screen = Screen.PrimaryScreen;
-            var popup = new Form
+            foreach (var screen in Screen.AllScreens)
             {
-                FormBorderStyle = FormBorderStyle.None,
-                BackColor = fundo,
-                Opacity = Math.Clamp(opacidade, 0.1, 1.0),
-                TopMost = true,
-                ShowInTaskbar = false,
-                StartPosition = FormStartPosition.Manual
-            };
+                var popup = new Form
+                {
+                    FormBorderStyle = FormBorderStyle.None,
+                    BackColor = fundo,
+                    Opacity = Math.Clamp(opacidade, 0.1, 1.0),
+                    TopMost = true,
+                    ShowInTaskbar = false,
+                    StartPosition = FormStartPosition.Manual
+                };
 
-            popup.Width = wPct > 0 ? (int)(screen.Bounds.Width * wPct / 100.0) : 300;
-            popup.Height = hPct > 0 ? (int)(screen.Bounds.Height * hPct / 100.0) : 100;
+                popup.Width = wPct > 0 ? (int)(screen.Bounds.Width * wPct / 100.0) : 300;
+                popup.Height = hPct > 0 ? (int)(screen.Bounds.Height * hPct / 100.0) : 100;
 
-            popup.Left = xPct >= 0 ? screen.Bounds.Left + (int)(screen.Bounds.Width * xPct / 100.0)
-                                   : screen.Bounds.Left + (screen.Bounds.Width - popup.Width) / 2;
-            popup.Top = yPct >= 0 ? screen.Bounds.Top + (int)(screen.Bounds.Height * yPct / 100.0)
-                                  : screen.Bounds.Top + (screen.Bounds.Height - popup.Height) / 2;
+                popup.Left = xPct >= 0 ? screen.Bounds.Left + (int)(screen.Bounds.Width * xPct / 100.0)
+                                    : screen.Bounds.Left + (screen.Bounds.Width - popup.Width) / 2;
+                popup.Top = yPct >= 0 ? screen.Bounds.Top + (int)(screen.Bounds.Height * yPct / 100.0)
+                                    : screen.Bounds.Top + (screen.Bounds.Height - popup.Height) / 2;
 
-            var lbl = new Label
-            {
-                Text = mensagem,
-                Dock = DockStyle.Fill,
-                ForeColor = texto,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font(fonte, tamanho, FontStyle.Bold)
-            };
-            popup.Controls.Add(lbl);
+                var lbl = new Label
+                {
+                    Text = mensagem,
+                    Dock = DockStyle.Fill,
+                    ForeColor = texto,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new Font(fonte, tamanho, FontStyle.Bold)
+                };
+                popup.Controls.Add(lbl);
 
-            popup.Load += (_, __) =>
-            {
-                IntPtr region = CreateRoundRectRgn(0, 0, popup.Width, popup.Height, raio, raio);
-                popup.Region = Region.FromHrgn(region);
+                popup.Load += (_, __) =>
+                {
+                    IntPtr region = CreateRoundRectRgn(0, 0, popup.Width, popup.Height, raio, raio);
+                    popup.Region = Region.FromHrgn(region);
 
-                const int GWL_EXSTYLE = -20;
-                const int WS_EX_TRANSPARENT = 0x20;
-                const int WS_EX_TOOLWINDOW = 0x80;
+                    const int GWL_EXSTYLE = -20;
+                    const int WS_EX_TRANSPARENT = 0x20;
+                    const int WS_EX_TOOLWINDOW = 0x80;
 
-                int exStyle = GetWindowLong(popup.Handle, GWL_EXSTYLE);
-                SetWindowLong(popup.Handle, GWL_EXSTYLE, exStyle | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW);
+                    int exStyle = GetWindowLong(popup.Handle, GWL_EXSTYLE);
+                    SetWindowLong(popup.Handle, GWL_EXSTYLE, exStyle | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW);
 
-                SetWindowPos(
-                    popup.Handle,
-                    HWND_TOPMOST,
-                    popup.Left,
-                    popup.Top,
-                    popup.Width,
-                    popup.Height,
-                    SWP_SHOWWINDOW
-                );
+                    SetWindowPos(
+                        popup.Handle,
+                        HWND_TOPMOST,
+                        popup.Left,
+                        popup.Top,
+                        popup.Width,
+                        popup.Height,
+                        SWP_SHOWWINDOW
+                    );
 
-                popup.BringToFront();
-                popup.Activate();
-            };
+                    popup.BringToFront();
+                    popup.Activate();
+                };
 
-            var timer = new Timer { Interval = duracao };
-            timer.Tick += (s, e) =>
-            {
-                timer.Stop();
-                timer.Dispose();
-                popup.Close();
-                popup.Dispose();
-            };
-            popup.Shown += (_, __) => timer.Start();
+                var timer = new Timer { Interval = duracao };
+                timer.Tick += (s, e) =>
+                {
+                    timer.Stop();
+                    timer.Dispose();
+                    popup.Close();
+                    popup.Dispose();
+                };
+                popup.Shown += (_, __) => timer.Start();
 
-            popup.Show(this);
+                popup.Show(this);
+            }
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                e.Cancel = true;
-                Hide();
-                return;
+                // Só minimizar se a opção estiver ativa
+                if (AppConfig.GetMostrarNaBandeja())
+                {
+                    e.Cancel = true;
+                    Hide();
+                    return;
+                }
+                else
+                {
+                    // Fecha de verdade
+                    Desconectar();
+                    trayIcon.Visible = false;
+                    base.OnFormClosing(e);
+                    return;
+                }
             }
 
             Desconectar();
@@ -498,6 +564,18 @@ namespace PopupTwitch
                 }
             }
             catch { }
+        }
+
+        private void CentralizarNaTela(Form form = null)
+        {
+            form ??= this;
+
+            var screen = Screen.FromPoint(Cursor.Position);
+            int x = screen.Bounds.Left + (screen.Bounds.Width - form.Width) / 2;
+            int y = screen.Bounds.Top + (screen.Bounds.Height - form.Height) / 2;
+
+            form.StartPosition = FormStartPosition.Manual;
+            form.Location = new Point(x, y);
         }
     }
 }
