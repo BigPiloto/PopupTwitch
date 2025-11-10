@@ -35,9 +35,111 @@ namespace PopupTwitch
         const uint SWP_NOSIZE = 0x0001;
         const uint SWP_SHOWWINDOW = 0x0040;
 
+        private NotifyIcon trayIcon;
+        private ContextMenuStrip trayMenu;
+        private ToolStripMenuItem trayConnectItem;
+
         public MainForm()
         {
+            // Ícone da bandeja
+            trayMenu = new ContextMenuStrip();
+
+            // abrir janela principal
+            trayMenu.Items.Add(Strings.Get("Btn_Open"), null, (s, e) =>
+            {
+                Show();
+                WindowState = FormWindowState.Normal;
+            });
+
+            // botão conectar/desconectar dinâmico
+            trayConnectItem = new ToolStripMenuItem();
+            trayMenu.Items.Add(trayConnectItem);
+
+            trayConnectItem.Click += (s, e) =>
+            {
+                if (conectado)
+                {
+                    Desconectar();
+                    MessageBox.Show(Strings.Get("Msg_Disconnected"),
+                        "Pop-up Twitch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    string canalSalvo = AppConfig.GetCanal()?.Trim();
+                    if (!string.IsNullOrWhiteSpace(canalSalvo))
+                    {
+                        Conectar(canalSalvo);
+                        MessageBox.Show(Strings.Get("Msg_Connected"),
+                            "Pop-up Twitch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(Strings.Get("Msg_NoChannel"),
+                            "Pop-up Twitch", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+
+                AtualizarEstadoInterface();
+            };
+
+            // submenu Configurações
+            var configMenu = new ToolStripMenuItem(Strings.Get("Title_Settings"));
+            configMenu.DropDownItems.Add(Strings.Get("Btn_IgnoredUsers"), null, (s, e) => new IgnoredUsersForm().ShowDialog());
+            configMenu.DropDownItems.Add(Strings.Get("Btn_PopupPosition"), null, (s, e) =>
+            {
+                using var pos = new PopupPositionForm(this);
+                pos.ShowDialog(this);
+            });
+            configMenu.DropDownItems.Add(Strings.Get("Btn_PopupDuration"), null, (s, e) => new PopupDurationForm().ShowDialog());
+            configMenu.DropDownItems.Add(Strings.Get("Btn_ChatIdle"), null, (s, e) => new ChatIdleForm().ShowDialog());
+            configMenu.DropDownItems.Add(Strings.Get("Btn_PopupStyle"), null, (s, e) => new PopupStyleForm().ShowDialog());
+            configMenu.DropDownItems.Add(Strings.Get("Btn_SoundSettings"), null, (s, e) => new SonsForm().ShowDialog());
+            configMenu.DropDownItems.Add(Strings.Get("Btn_Language"), null, (s, e) => new LanguageForm().ShowDialog());
+            trayMenu.Items.Add(configMenu);
+
+            // links externos
+            trayMenu.Items.Add("-");
+            trayMenu.Items.Add(Strings.Get("Btn_Feedback"), null, (s, e) =>
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "https://popuptwitch.meularsmart.com/#Contato",
+                    UseShellExecute = true
+                });
+            });
+            trayMenu.Items.Add(Strings.Get("Btn_Issue"), null, (s, e) =>
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "https://github.com/BigPiloto/PopupTwitch/issues",
+                    UseShellExecute = true
+                });
+            });
+
+            // sair
+            trayMenu.Items.Add("-");
+            trayMenu.Items.Add(Strings.Get("Btn_Exit"), null, (s, e) => Application.Exit());
+
+
+            trayIcon = new NotifyIcon
+            {
+                Icon = SystemIcons.Application,
+                ContextMenuStrip = trayMenu,
+                Text = "Pop-up Twitch",
+                Visible = true
+            };
+
+            // Clique duplo no ícone reabre o app
+            trayIcon.DoubleClick += (s, e) => { Show(); WindowState = FormWindowState.Normal; };
+
             InitializeComponent();
+            this.Resize += (s, e) =>
+            {
+                if (WindowState == FormWindowState.Minimized)
+                {
+                    Hide();
+                }
+            };
             CheckForUpdate();
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = Strings.Get("Title_Main");
@@ -86,6 +188,7 @@ namespace PopupTwitch
                 Top = chkAutoConectar.Bottom + 10,
                 Left = 20
             };
+            AtualizarEstadoInterface();
             btnToggle.AutoSize = true;
             btnToggle.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnToggle.MinimumSize = new Size(240, 30);
@@ -97,23 +200,21 @@ namespace PopupTwitch
                 if (!conectado)
                 {
                     canal = txtCanal.Text.Trim();
-                    if (string.IsNullOrEmpty(canal))
+                    if (string.IsNullOrWhiteSpace(canal))
                     {
                         btnToggle.Enabled = true;
                         return;
                     }
 
-                    btnToggle.Text = Strings.Get("Btn_Connecting");
                     await Task.Run(() => Conectar(canal));
-                    btnToggle.Text = Strings.Get("Btn_Disconnect");
+
                 }
                 else
                 {
-                    btnToggle.Text = Strings.Get("Btn_Disconnecting");
                     await Task.Run(() => Desconectar());
-                    btnToggle.Text = Strings.Get("Btn_Connect");
                 }
 
+                AtualizarEstadoInterface();
                 btnToggle.Enabled = true;
             };
             Controls.Add(btnToggle);
@@ -175,7 +276,14 @@ namespace PopupTwitch
             {
                 conectado = true;
                 ultimaMensagem = DateTime.Now;
-                BeginInvoke(() => Text = Strings.Get("Title_Main"));
+                if (IsHandleCreated)
+                {
+                    BeginInvoke((Action)(() =>
+                    {
+                        Text = Strings.Get("Title_Main");
+                        AtualizarEstadoInterface();
+                    }));
+                }
             };
 
             client.OnMessageReceived += (s, e) =>
@@ -192,6 +300,9 @@ namespace PopupTwitch
 
             client.Connect();
             conectado = true;
+
+            if (IsHandleCreated)
+                BeginInvoke((Action)AtualizarEstadoInterface);
         }
 
         private void Desconectar()
@@ -199,6 +310,9 @@ namespace PopupTwitch
             if (client != null && client.IsConnected)
                 client.Disconnect();
             conectado = false;
+
+            if (IsHandleCreated)
+                BeginInvoke((Action)AtualizarEstadoInterface);
         }
 
         private void MostrarPopup()
@@ -360,7 +474,17 @@ namespace PopupTwitch
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            // Se o fechamento for pelo botão X, apenas ocultar
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+                return;
+            }
+
+            // Fechamento real (sair pelo menu "Exit")
             Desconectar();
+            trayIcon.Visible = false;
             base.OnFormClosing(e);
         }
 
@@ -390,6 +514,26 @@ namespace PopupTwitch
                         MessageBoxIcon.Warning
                     );
                 }
+            }
+        }
+
+        private void AtualizarEstadoInterface()
+        {
+            // Atualiza botão da janela principal
+            var btnToggle = this.Controls["btnToggle"] as Button;
+            if (btnToggle != null)
+            {
+                btnToggle.Text = conectado
+                    ? Strings.Get("Btn_Disconnect")
+                    : Strings.Get("Btn_Connect");
+            }
+
+            // Atualiza texto do menu da bandeja
+            if (trayConnectItem != null)
+            {
+                trayConnectItem.Text = conectado
+                    ? Strings.Get("Btn_Disconnect")
+                    : Strings.Get("Btn_Connect");
             }
         }
 

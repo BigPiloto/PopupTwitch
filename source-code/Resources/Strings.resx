@@ -112,4 +112,12 @@
   <data name="Opt_Portuguese" xml:space="preserve"><value>Português (Brasil)</value></data>
   <data name="Opt_English" xml:space="preserve"><value>Inglês</value></data>
   <data name="Lbl_SelectLanguage" xml:space="preserve"><value>Selecione o idioma:</value></data>
+
+  <!-- Sytem Tray -->
+  <data name="Btn_Open" xml:space="preserve"><value>Abrir</value></data>
+  <data name="Btn_Exit" xml:space="preserve"><value>Sair</value></data>
+  <data name="Msg_Disconnected" xml:space="preserve"><value>Desconectado com sucesso</value></data>
+  <data name="Msg_NotConnected" xml:space="preserve"><value>Você não está conectado</value></data>
+  <data name="Msg_Connected" xml:space="preserve"><value>Conectado com sucesso</value></data>
+  <data name="Msg_NoChannel" xml:space="preserve"><value>Nenhum canal definido</value></data>
 </root>

@@ -112,4 +112,12 @@
   <data name="Opt_Portuguese" xml:space="preserve"><value>Portuguese (Brazil)</value></data>
   <data name="Opt_English" xml:space="preserve"><value>English</value></data>
   <data name="Lbl_SelectLanguage" xml:space="preserve"><value>Select the language:</value></data>
+
+  <!-- Sytem Tray -->
+  <data name="Btn_Open" xml:space="preserve"><value>Open</value></data>
+  <data name="Btn_Exit" xml:space="preserve"><value>Exit</value></data>
+  <data name="Msg_Disconnected" xml:space="preserve"><value>Successfully disconnected</value></data>
+  <data name="Msg_NotConnected" xml:space="preserve"><value>You are not connected</value></data>
+  <data name="Msg_Connected" xml:space="preserve"><value>Successfully connected</value></data>
+  <data name="Msg_NoChannel" xml:space="preserve"><value>No channel defined</value></data>
 </root>
