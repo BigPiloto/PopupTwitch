@@ -35,6 +35,7 @@ namespace PopupTwitch
             public string PopupFonte { get; set; } = "Segoe UI";
             public float PopupTamanhoFonte { get; set; } = 12f;
             public bool IniciarComWindows { get; set; } = false;
+            public bool AutoConectar { get; set; } = false;
         }
 
         private static ConfigData Data = Load();
@@ -225,6 +226,14 @@ namespace PopupTwitch
                 key.SetValue(appName, appPath);
             else
                 key.DeleteValue(appName, false);
+        }
+
+        // --- Auto Conectar ---
+        public static bool GetAutoConectar() => Data.AutoConectar;
+        public static void SetAutoConectar(bool ativo)
+        {
+            Data.AutoConectar = ativo;
+            Save();
         }
     }
 }

@@ -64,11 +64,26 @@ namespace PopupTwitch
             };
             Controls.Add(txtCanal);
 
+            var chkAutoConectar = new CheckBox
+            {
+                Name = "chkAutoConectar",
+                Text = Strings.Get("Chk_AutoConnect"),
+                Top = txtCanal.Bottom + 10,
+                Left = 20,
+                AutoSize = true,
+                Checked = AppConfig.GetAutoConectar()
+            };
+            chkAutoConectar.CheckedChanged += (s, e) =>
+            {
+                AppConfig.SetAutoConectar(chkAutoConectar.Checked);
+            };
+            Controls.Add(chkAutoConectar);
+
             var btnToggle = new Button
             {
                 Name = "btnToggle",
                 Text = Strings.Get("Btn_Connect"),
-                Top = 100,
+                Top = chkAutoConectar.Bottom + 10,
                 Left = 20
             };
             btnToggle.AutoSize = true;
@@ -348,5 +363,35 @@ namespace PopupTwitch
             Desconectar();
             base.OnFormClosing(e);
         }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            bool autoConectar = AppConfig.GetAutoConectar();
+            string canalSalvo = AppConfig.GetCanal()?.Trim();
+
+            if (autoConectar && !string.IsNullOrWhiteSpace(canalSalvo))
+            {
+                try
+                {
+                    var btnToggle = this.Controls["btnToggle"] as Button;
+                    if (btnToggle != null && !conectado)
+                    {
+                        btnToggle.PerformClick(); // simula clique no botão "Conectar"
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        $"{Strings.Get("Msg_AutoConnectFail")}\n{ex.Message}",
+                        Strings.Get("Msg_ErrorTitle"),
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
+            }
+        }
+
     }
 }

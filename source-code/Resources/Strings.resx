@@ -9,6 +9,7 @@
   <data name="Default_PopupMessage" xml:space="preserve"><value>Chat ativo novamente!</value></data>
   <data name="Error_PopupTooShort" xml:space="preserve"><value>O tempo mínimo do pop-up é 500 ms.</value></data>
   <data name="Error_IdleTooShort" xml:space="preserve"><value>O tempo mínimo ocioso é 1 segundo.</value></data>
+  <data name="Chk_AutoConnect" xml:space="preserve"><value>Conectar automaticamente</value></data>
 
   <!-- ChatIdleForm -->
   <data name="Title_ChatIdle" xml:space="preserve"><value>Tempo ocioso do chat</value></data>
