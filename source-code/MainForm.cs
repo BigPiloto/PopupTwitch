@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using TwitchLib.Client;
 using TwitchLib.Client.Models;
 using Timer = System.Windows.Forms.Timer;
-using System.Threading;
 using System.Runtime.InteropServices;
 using System.Drawing;
 using System.IO;
@@ -21,9 +20,13 @@ namespace PopupTwitch
             int X, int Y, int cx, int cy, uint uFlags);
 
         [DllImport("gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn(
-            int x1, int y1, int x2, int y2, int w, int h
-        );
+        private static extern IntPtr CreateRoundRectRgn(int x1, int y1, int x2, int y2, int w, int h);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
         private TwitchClient? client;
         private bool conectado = false;
@@ -44,7 +47,6 @@ namespace PopupTwitch
             // Ícone da bandeja
             trayMenu = new ContextMenuStrip();
 
-            // abrir janela principal
             trayMenu.Items.Add(Strings.Get("Btn_Open"), null, (s, e) =>
             {
                 Show();
@@ -54,7 +56,6 @@ namespace PopupTwitch
             // botão conectar/desconectar dinâmico
             trayConnectItem = new ToolStripMenuItem();
             trayMenu.Items.Add(trayConnectItem);
-
             trayConnectItem.Click += (s, e) =>
             {
                 if (conectado)
@@ -78,7 +79,6 @@ namespace PopupTwitch
                             "Pop-up Twitch", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
-
                 AtualizarEstadoInterface();
             };
 
@@ -120,7 +120,6 @@ namespace PopupTwitch
             trayMenu.Items.Add("-");
             trayMenu.Items.Add(Strings.Get("Btn_Exit"), null, (s, e) => Application.Exit());
 
-
             trayIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Application,
@@ -129,18 +128,18 @@ namespace PopupTwitch
                 Visible = true
             };
 
-            // Clique duplo no ícone reabre o app
             trayIcon.DoubleClick += (s, e) => { Show(); WindowState = FormWindowState.Normal; };
 
             InitializeComponent();
+
             this.Resize += (s, e) =>
             {
                 if (WindowState == FormWindowState.Minimized)
-                {
                     Hide();
-                }
             };
+
             CheckForUpdate();
+
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = Strings.Get("Title_Main");
             this.Width = 300;
@@ -186,17 +185,13 @@ namespace PopupTwitch
                 Name = "btnToggle",
                 Text = Strings.Get("Btn_Connect"),
                 Top = chkAutoConectar.Bottom + 10,
-                Left = 20
+                Left = 20,
+                AutoSize = true,
+                MinimumSize = new Size(240, 30)
             };
-            AtualizarEstadoInterface();
-            btnToggle.AutoSize = true;
-            btnToggle.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnToggle.MinimumSize = new Size(240, 30);
-
             btnToggle.Click += async (s, e) =>
             {
                 btnToggle.Enabled = false;
-
                 if (!conectado)
                 {
                     canal = txtCanal.Text.Trim();
@@ -205,22 +200,18 @@ namespace PopupTwitch
                         btnToggle.Enabled = true;
                         return;
                     }
-
                     await Task.Run(() => Conectar(canal));
-
                 }
                 else
                 {
                     await Task.Run(() => Desconectar());
                 }
-
                 AtualizarEstadoInterface();
                 btnToggle.Enabled = true;
             };
             Controls.Add(btnToggle);
 
-            this.FormClosing += (s, e) => AppConfig.SetCanal(txtCanal.Text);
-
+            // botão engrenagem
             var btnConfig = new Button
             {
                 Name = "btnConfig",
@@ -252,15 +243,14 @@ namespace PopupTwitch
             catch { }
 
             btnConfig.ImageAlign = ContentAlignment.MiddleCenter;
-
             btnConfig.Click += (s, e) =>
             {
                 var menu = new SettingsMenuForm();
                 menu.ShowDialog();
             };
-
             Controls.Add(btnConfig);
 
+            this.FormClosing += (s, e) => AppConfig.SetCanal(txtCanal.Text);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = true;
@@ -277,13 +267,7 @@ namespace PopupTwitch
                 conectado = true;
                 ultimaMensagem = DateTime.Now;
                 if (IsHandleCreated)
-                {
-                    BeginInvoke((Action)(() =>
-                    {
-                        Text = Strings.Get("Title_Main");
-                        AtualizarEstadoInterface();
-                    }));
-                }
+                    BeginInvoke((Action)AtualizarEstadoInterface);
             };
 
             client.OnMessageReceived += (s, e) =>
@@ -310,7 +294,6 @@ namespace PopupTwitch
             if (client != null && client.IsConnected)
                 client.Disconnect();
             conectado = false;
-
             if (IsHandleCreated)
                 BeginInvoke((Action)AtualizarEstadoInterface);
         }
@@ -319,90 +302,140 @@ namespace PopupTwitch
         {
             SonsForm.ReproduzirSom();
 
-            foreach (var screen in Screen.AllScreens)
+            var (fundo, texto, raio, mensagem, opacidade, fonte, tamanho) = AppConfig.GetPopupStyle();
+            var (xPct, yPct, wPct, hPct) = AppConfig.GetPopupData();
+            int duracao = AppConfig.GetPopupDuration();
+
+            if (InvokeRequired)
             {
-                Thread popupThread = new Thread(() =>
+                BeginInvoke((Action)MostrarPopup);
+                return;
+            }
+
+            var screen = Screen.PrimaryScreen;
+            var popup = new Form
+            {
+                FormBorderStyle = FormBorderStyle.None,
+                BackColor = fundo,
+                Opacity = Math.Clamp(opacidade, 0.1, 1.0),
+                TopMost = true,
+                ShowInTaskbar = false,
+                StartPosition = FormStartPosition.Manual
+            };
+
+            popup.Width = wPct > 0 ? (int)(screen.Bounds.Width * wPct / 100.0) : 300;
+            popup.Height = hPct > 0 ? (int)(screen.Bounds.Height * hPct / 100.0) : 100;
+
+            popup.Left = xPct >= 0 ? screen.Bounds.Left + (int)(screen.Bounds.Width * xPct / 100.0)
+                                   : screen.Bounds.Left + (screen.Bounds.Width - popup.Width) / 2;
+            popup.Top = yPct >= 0 ? screen.Bounds.Top + (int)(screen.Bounds.Height * yPct / 100.0)
+                                  : screen.Bounds.Top + (screen.Bounds.Height - popup.Height) / 2;
+
+            var lbl = new Label
+            {
+                Text = mensagem,
+                Dock = DockStyle.Fill,
+                ForeColor = texto,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font(fonte, tamanho, FontStyle.Bold)
+            };
+            popup.Controls.Add(lbl);
+
+            popup.Load += (_, __) =>
+            {
+                IntPtr region = CreateRoundRectRgn(0, 0, popup.Width, popup.Height, raio, raio);
+                popup.Region = Region.FromHrgn(region);
+
+                const int GWL_EXSTYLE = -20;
+                const int WS_EX_TRANSPARENT = 0x20;
+                const int WS_EX_TOOLWINDOW = 0x80;
+
+                int exStyle = GetWindowLong(popup.Handle, GWL_EXSTYLE);
+                SetWindowLong(popup.Handle, GWL_EXSTYLE, exStyle | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW);
+
+                SetWindowPos(
+                    popup.Handle,
+                    HWND_TOPMOST,
+                    popup.Left,
+                    popup.Top,
+                    popup.Width,
+                    popup.Height,
+                    SWP_SHOWWINDOW
+                );
+
+                popup.BringToFront();
+                popup.Activate();
+            };
+
+            var timer = new Timer { Interval = duracao };
+            timer.Tick += (s, e) =>
+            {
+                timer.Stop();
+                timer.Dispose();
+                popup.Close();
+                popup.Dispose();
+            };
+            popup.Shown += (_, __) => timer.Start();
+
+            popup.Show(this);
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+                return;
+            }
+
+            Desconectar();
+            trayIcon.Visible = false;
+            base.OnFormClosing(e);
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            bool autoConectar = AppConfig.GetAutoConectar();
+            string canalSalvo = AppConfig.GetCanal()?.Trim();
+            if (autoConectar && !string.IsNullOrWhiteSpace(canalSalvo))
+            {
+                try
                 {
-                    var (fundo, texto, raio, mensagem, opacidade, fonte, tamanho) = AppConfig.GetPopupStyle();
-                    var (xPct, yPct, wPct, hPct) = AppConfig.GetPopupData();
-
-                    var popup = new Form
-                    {
-                        FormBorderStyle = FormBorderStyle.None,
-                        BackColor = fundo,
-                        Opacity = Math.Clamp(opacidade, 0.1, 1.0),
-                        TopMost = true,
-                        ShowInTaskbar = false,
-                        StartPosition = FormStartPosition.Manual,
-                    };
-
-                    popup.Width = (wPct > 0 && hPct > 0)
-                        ? (int)(screen.Bounds.Width * wPct / 100.0)
-                        : 300;
-                    popup.Height = (wPct > 0 && hPct > 0)
-                        ? (int)(screen.Bounds.Height * hPct / 100.0)
-                        : 100;
-
-                    if (xPct >= 0 && yPct >= 0)
-                    {
-                        popup.Left = screen.Bounds.Left + (int)(screen.Bounds.Width * xPct / 100.0);
-                        popup.Top = screen.Bounds.Top + (int)(screen.Bounds.Height * yPct / 100.0);
-                    }
-                    else
-                    {
-                        popup.Left = screen.Bounds.Left + (screen.Bounds.Width - popup.Width) / 2;
-                        popup.Top = screen.Bounds.Top + (screen.Bounds.Height - popup.Height) / 2;
-
-                    }
-
-                    var lbl = new Label
-                    {
-                        Text = mensagem,
-                        Dock = DockStyle.Fill,
-                        ForeColor = texto,
-                        TextAlign = ContentAlignment.MiddleCenter,
-                        Font = new Font(fonte, tamanho, FontStyle.Bold)
-                    };
-                    popup.Controls.Add(lbl);
-
-                    popup.Load += (_, __) =>
-                    {
-                        IntPtr region = CreateRoundRectRgn(0, 0, popup.Width, popup.Height, raio, raio);
-                        popup.Region = Region.FromHrgn(region);
-
-                        SetWindowPos(
-                            popup.Handle, HWND_TOPMOST,
-                            0, 0, 0, 0,
-                            SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW
-                        );
-
-                        const int GWL_EXSTYLE = -20;
-                        const int WS_EX_TRANSPARENT = 0x20;
-                        const int WS_EX_TOOLWINDOW = 0x80;
-                        int exStyle = GetWindowLong(popup.Handle, GWL_EXSTYLE);
-                        SetWindowLong(popup.Handle, GWL_EXSTYLE, exStyle | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW);
-
-                        popup.Activate();
-                    };
-
-                    int duracao = AppConfig.GetPopupDuration();
-                    var timer = new Timer { Interval = duracao };
-                    timer.Tick += (s, e) => popup.Close();
-                    timer.Start();
-
-                    Application.Run(popup);
-                });
-
-                popupThread.SetApartmentState(ApartmentState.STA);
-                popupThread.Start();
+                    var btnToggle = this.Controls["btnToggle"] as Button;
+                    if (btnToggle != null && !conectado)
+                        btnToggle.PerformClick();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        $"{Strings.Get("Msg_AutoConnectFail")}\n{ex.Message}",
+                        Strings.Get("Msg_ErrorTitle"),
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
             }
         }
 
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        private void AtualizarEstadoInterface()
+        {
+            var btnToggle = this.Controls["btnToggle"] as Button;
+            if (btnToggle != null)
+            {
+                btnToggle.Text = conectado
+                    ? Strings.Get("Btn_Disconnect")
+                    : Strings.Get("Btn_Connect");
+            }
 
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+            if (trayConnectItem != null)
+            {
+                trayConnectItem.Text = conectado
+                    ? Strings.Get("Btn_Disconnect")
+                    : Strings.Get("Btn_Connect");
+            }
+        }
 
         private async void CheckForUpdate()
         {
@@ -411,13 +444,11 @@ namespace PopupTwitch
                 using var client = new HttpClient();
                 client.DefaultRequestHeaders.Add("User-Agent", "Pop-upTwitch");
 
-                // Obtém a última release pública do GitHub
                 var json = await client.GetStringAsync("https://api.github.com/repos/BigPiloto/PopupTwitch/releases/latest");
                 using var doc = JsonDocument.Parse(json);
                 var root = doc.RootElement;
 
                 string latestTag = root.GetProperty("tag_name").GetString() ?? "";
-                string latestUrl = root.GetProperty("html_url").GetString() ?? "";
                 string assetUrl = "";
 
                 if (root.TryGetProperty("assets", out var assets) && assets.GetArrayLength() > 0)
@@ -466,76 +497,7 @@ namespace PopupTwitch
                     }
                 }
             }
-            catch
-            {
-                // ignora erros silenciosamente
-            }
+            catch { }
         }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            // Se o fechamento for pelo botão X, apenas ocultar
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                Hide();
-                return;
-            }
-
-            // Fechamento real (sair pelo menu "Exit")
-            Desconectar();
-            trayIcon.Visible = false;
-            base.OnFormClosing(e);
-        }
-
-        protected override void OnShown(EventArgs e)
-        {
-            base.OnShown(e);
-
-            bool autoConectar = AppConfig.GetAutoConectar();
-            string canalSalvo = AppConfig.GetCanal()?.Trim();
-
-            if (autoConectar && !string.IsNullOrWhiteSpace(canalSalvo))
-            {
-                try
-                {
-                    var btnToggle = this.Controls["btnToggle"] as Button;
-                    if (btnToggle != null && !conectado)
-                    {
-                        btnToggle.PerformClick(); // simula clique no botão "Conectar"
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(
-                        $"{Strings.Get("Msg_AutoConnectFail")}\n{ex.Message}",
-                        Strings.Get("Msg_ErrorTitle"),
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-                }
-            }
-        }
-
-        private void AtualizarEstadoInterface()
-        {
-            // Atualiza botão da janela principal
-            var btnToggle = this.Controls["btnToggle"] as Button;
-            if (btnToggle != null)
-            {
-                btnToggle.Text = conectado
-                    ? Strings.Get("Btn_Disconnect")
-                    : Strings.Get("Btn_Connect");
-            }
-
-            // Atualiza texto do menu da bandeja
-            if (trayConnectItem != null)
-            {
-                trayConnectItem.Text = conectado
-                    ? Strings.Get("Btn_Disconnect")
-                    : Strings.Get("Btn_Connect");
-            }
-        }
-
     }
 }
