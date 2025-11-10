@@ -102,6 +102,7 @@
   <data name="Btn_Close" xml:space="preserve"><value>Close</value></data>
   <data name="Btn_Feedback" xml:space="preserve"><value>Send Feedback</value></data>
   <data name="Btn_Issue" xml:space="preserve"><value>Report Issue on GitHub</value></data>
+  <data name="Chk_StartupWithWindows" xml:space="preserve"><value>Start with Windows</value></data>
 
   <!-- Language -->
   <data name="Btn_Language" xml:space="preserve"><value>Language</value></data>

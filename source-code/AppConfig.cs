@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Text.Json;
 using PopupTwitch.Resources;
+using Microsoft.Win32;
+using PopupTwitch.Resources;
 
 namespace PopupTwitch
 {
@@ -32,6 +34,7 @@ namespace PopupTwitch
             public string Idioma { get; set; } = "pt-BR";
             public string PopupFonte { get; set; } = "Segoe UI";
             public float PopupTamanhoFonte { get; set; } = 12f;
+            public bool IniciarComWindows { get; set; } = false;
         }
 
         private static ConfigData Data = Load();
@@ -204,6 +207,24 @@ namespace PopupTwitch
             }
             
             return Data.Idioma;
+        }
+
+        // --- Inicialização com Windows ---
+        public static bool GetIniciarComWindows() => Data.IniciarComWindows;
+
+        public static void SetIniciarComWindows(bool ativar)
+        {
+            Data.IniciarComWindows = ativar;
+            Save();
+
+            string appName = "Pop-up Twitch";
+            string appPath = Application.ExecutablePath;
+            using var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+
+            if (ativar)
+                key.SetValue(appName, appPath);
+            else
+                key.DeleteValue(appName, false);
         }
     }
 }

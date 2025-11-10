@@ -56,7 +56,23 @@ namespace PopupTwitch
             AddButton("Btn_PopupStyle", (s, e) => new PopupStyleForm().ShowDialog());
             AddButton("Btn_SoundSettings", (s, e) => new SonsForm().ShowDialog());
             AddButton("Btn_Language", (s, e) => new LanguageForm().ShowDialog());
-            topo += 40;
+
+            // --- Checkbox: iniciar com o Windows ---
+            var chkIniciarComWindows = new CheckBox
+            {
+                Text = Strings.Get("Chk_StartupWithWindows"),
+                Left = margemEsq,
+                Top = topo + 8,
+                AutoSize = true,
+                Checked = AppConfig.GetIniciarComWindows()
+            };
+            chkIniciarComWindows.CheckedChanged += (s, e) =>
+            {
+                AppConfig.SetIniciarComWindows(chkIniciarComWindows.Checked);
+            };
+            Controls.Add(chkIniciarComWindows);
+            topo += espacamento + 10;
+
             AddButton("Btn_Feedback", (s, e) =>
             {
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
