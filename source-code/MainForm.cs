@@ -77,7 +77,10 @@ namespace PopupTwitch
             });
 
             // botão conectar/desconectar dinâmico
-            trayConnectItem = new ToolStripMenuItem();
+            trayConnectItem = new ToolStripMenuItem
+            {
+                Text = Strings.Get("Btn_Connect")
+            };
             trayMenu.Items.Add(trayConnectItem);
             trayConnectItem.Click += (s, e) =>
             {
@@ -416,8 +419,8 @@ namespace PopupTwitch
                         SWP_SHOWWINDOW
                     );
 
-                    popup.BringToFront();
-                    popup.Activate();
+                    //popup.BringToFront();
+                    //popup.Activate();
                 };
 
                 var timer = new Timer { Interval = duracao };
@@ -430,7 +433,7 @@ namespace PopupTwitch
                 };
                 popup.Shown += (_, __) => timer.Start();
 
-                popup.Show(this);
+                popup.Show();
             }
         }
 
@@ -447,13 +450,21 @@ namespace PopupTwitch
                 }
                 else
                 {
-                    // Fecha de verdade
-                    Desconectar();
-                    trayIcon.Visible = false;
-                    base.OnFormClosing(e);
-                    return;
+                    // Pergunta antes de sair
+                    var result = MessageBox.Show(
+                        Strings.Get("Msg_ConfirmExit"),
+                        "Pop-up Twitch",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question
+                    );
+
+                    if (result == DialogResult.No)
+                    {
+                         e.Cancel = true;
+                         return;
+                    }
                 }
-            }
+            }           
 
             Desconectar();
             trayIcon.Visible = false;

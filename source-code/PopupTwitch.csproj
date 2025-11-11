@@ -9,7 +9,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <SatelliteResourceLanguages>en;pt-BR</SatelliteResourceLanguages>
 
-    <AppVersion>2.5.1</AppVersion>
+    <AppVersion>2.5.2</AppVersion>
 
     <AssemblyVersion>$(AppVersion)</AssemblyVersion>
     <FileVersion>$(AppVersion)</FileVersion>

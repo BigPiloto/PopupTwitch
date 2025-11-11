@@ -51,6 +51,7 @@
   <data name="Msg_UpdateTitle" xml:space="preserve"><value>Update</value></data>
   <data name="Msg_UpdateFailed" xml:space="preserve"><value>Failed to download the update.</value></data>
   <data name="Msg_ErrorTitle" xml:space="preserve"><value>Error</value></data>
+  <data name="Msg_ConfirmExit" xml:space="preserve"><value>Are you sure you want to exit?</value></data>
 
   <!-- PopupDurationForm -->
   <data name="Title_PopupDuration" xml:space="preserve"><value>Popup Duration</value></data>
