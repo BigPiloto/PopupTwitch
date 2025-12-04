@@ -104,6 +104,7 @@
   <data name="Btn_Issue" xml:space="preserve"><value>Report Issue on GitHub</value></data>
   <data name="Chk_StartupWithWindows" xml:space="preserve"><value>Start with Windows</value></data>
   <data name="Chk_MinimizeToTray" xml:space="preserve"><value>Minimize to system tray</value></data>
+  <data name="Btn_TestKeyword" xml:space="preserve"><value>Keyword for Test</value></data>
 
   <!-- Language -->
   <data name="Btn_Language" xml:space="preserve"><value>Language</value></data>
@@ -119,4 +120,10 @@
   <data name="Msg_Disconnected" xml:space="preserve"><value>Successfully disconnected</value></data>
   <data name="Msg_Connected" xml:space="preserve"><value>Successfully connected</value></data>
   <data name="Msg_NoChannel" xml:space="preserve"><value>No channel defined</value></data>
+
+  <!-- Palavra de Teste -->
+  <data name="Title_TestKeyword" xml:space="preserve"><value>Test Keyword</value></data>
+  <data name="Lbl_TestKeyword" xml:space="preserve"><value>Enter the test keyword:</value></data>
+  <data name="Msg_KeywordEmpty " xml:space="preserve"><value>The keyword cannot be empty</value></data>
+  <data name="Msg_Test_Saved" xml:space="preserve"><value>Saved successfully!</value></data>
 </root>

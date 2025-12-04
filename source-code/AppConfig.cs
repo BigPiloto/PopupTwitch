@@ -37,6 +37,7 @@ namespace PopupTwitch
             public bool IniciarComWindows { get; set; } = false;
             public bool AutoConectar { get; set; } = false;
             public bool MostrarNaBandeja { get; set; } = false;
+            public string TestKeyword { get; set; } = "!popup";
         }
 
         private static ConfigData Data = Load();
@@ -243,6 +244,18 @@ namespace PopupTwitch
         public static void SetAutoConectar(bool ativo)
         {
             Data.AutoConectar = ativo;
+            Save();
+        }
+
+        // --- Palavra de Teste ---
+        public static string GetTestKeyword()
+        {
+            return Data.TestKeyword ?? "!popup";
+        }
+
+        public static void SetTestKeyword(string keyword)
+        {
+            Data.TestKeyword = keyword;
             Save();
         }
     }

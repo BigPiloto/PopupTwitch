@@ -327,9 +327,26 @@ namespace PopupTwitch
 
             client.OnMessageReceived += (s, e) =>
             {
+                string msg = e.ChatMessage.Message.Trim();
+                string autor = e.ChatMessage.Username.ToLower();
+                string canalConfig = AppConfig.GetCanal().ToLower();
+
+                // 1) Carrega a palavra definida pelo usuário
+                string testKeyword = AppConfig.GetTestKeyword();
+
+                // 2) Se a mensagem for exatamente a palavra de teste e foi enviada pelo dono do canal → dispara popup
+                if (string.Equals(msg, testKeyword, StringComparison.OrdinalIgnoreCase) && autor == canalConfig)
+                {
+                    MostrarPopup();
+                    ultimaMensagem = DateTime.Now;
+                    return;
+                }
+
+                // 3) Verifica ignorados
                 if (AppConfig.DeveIgnorar(e.ChatMessage.Username))
                     return;
 
+                // 4) Lógica normal do idle
                 var diff = (DateTime.Now - ultimaMensagem).TotalSeconds;
                 int idleSec = AppConfig.GetChatIdle();
                 if (diff >= idleSec)
